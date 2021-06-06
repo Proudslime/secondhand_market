@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slime.dao.mapper.storeLoginMapper">
+
+    <select id="isHavethisStore" resultType="int">
+        select count(0)
+        From secondhand.storetable
+        where storeName = #{storename}
+    </select>
+    
+    <select id="passwordCheck" resultType="java.lang.Integer">
+        select COUNT(0)
+        from secondhand.storetable
+        where storeName = #{storeName} and password = #{password}
+    </select>
+
+    <select id="loginin" resultType="Store">
+        select
+        *
+        FROM secondhand.storetable
+        where storeName = #{storename} and password = #{password}
+    </select>
+
+    <insert id="register" parameterType="com.slime.pojo.Store">
+        insert into
+            secondhand.storetable(storeName, password, gender, phoneNumber, auditStatus, wallet, storelevel)
+        VALUES
+            (#{storeName},#{password},#{gender},#{phoneNumber},#{auditStatus},#{wallet},#{storelevel})
+    </insert>
+
+</mapper>

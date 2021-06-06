@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slime.dao.mapper.UserShopCartMapper">
+
+    <sql id="cart_item_from_table">
+
+    </sql>
+
+    <select id="getUserID" resultType="java.lang.Integer">
+        select userID
+        From secondhand.usertable
+        where userName = #{userName}
+    </select>
+
+    <select id="getUserShopCart" resultType="ShoppingCart" >
+        select *
+        From secondhand.shopping_cart
+        where userID = #{userID}
+    </select>
+
+    <select id="getDetailGoods" resultType="com.slime.pojo.Goods">
+        select *
+        FROM secondhand.goodstable
+        where goodsID = #{GoodsID}
+    </select>
+
+    <select id="isHaveThisGoodsInCart" resultType="java.lang.Integer">
+        select count(0)
+        from secondhand.shopping_cart
+        where cartID = #{cartID} and userID = #{userID}
+    </select>
+
+    <select id="userCartCount" resultType="java.lang.Integer">
+        select count(0)
+        from secondhand.shopping_cart
+        where userID = #{userID}
+    </select>
+
+    <delete id="deleteGoodsfromCart">
+        delete from secondhand.shopping_cart
+        where cartID = #{cartID} and userID = #{userID}
+    </delete>
+
+    <delete id="deleteCart">
+        delete from secondhand.shopping_cart
+        where userID = #{userID}
+    </delete>
+
+    <update id="updateCart">
+        update secondhand.shopping_cart
+        set amout = #{count}
+        where userID = #{userID} and cartID = #{cartID}
+    </update>
+
+    <insert id="insertGoodsforCart" parameterType="com.slime.pojo.ShoppingCart">
+        insert into secondhand.shopping_cart
+        (cartID, GoodsID, amout, userID)
+        VALUES (#{cartID},#{GoodsID},#{amout},#{userID})
+    </insert>
+
+</mapper>

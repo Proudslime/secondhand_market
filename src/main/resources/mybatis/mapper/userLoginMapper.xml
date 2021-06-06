@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slime.dao.mapper.userLoginMapper">
+    <select id="isHavethisUser" resultType="java.lang.Integer">
+        select count(0)
+        from secondhand.usertable
+        where userName = #{userName}
+    </select>
+
+    <select id="passwordCheck" resultType="java.lang.Integer">
+        select count(0)
+        from secondhand.usertable
+        where userName = #{userName} and password = #{password}
+    </select>
+
+    <select id="loginin" resultType="com.slime.pojo.User">
+        select * from secondhand.usertable
+        where userName = #{userName} and password = #{password}
+    </select>
+
+    <insert id="register" parameterType="com.slime.pojo.User">
+        insert into secondhand.usertable
+            (userName, password, gender, birth,
+             phoneNumber, bankNumber, city, email, wallet, integral)
+        VALUES
+            (#{userName},#{password},#{gender},#{birth},
+             #{phoneNumber},#{bankNumber},#{city},
+             #{email},#{wallet},#{integral})
+    </insert>
+</mapper>
