@@ -2,11 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.slime.dao.mapper.UserShopCartMapper">
-
-    <sql id="cart_item_from_table">
-
-    </sql>
+<mapper namespace="com.slime.dao.mapper.userMappers.UserShopCartMapper">
 
     <select id="getUserID" resultType="java.lang.Integer">
         select userID

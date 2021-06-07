@@ -9,19 +9,14 @@ import org.omg.CORBA.MARSHAL;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Warehouse_ALL {
+    //仓库ID
     private int wareID;
+    //该仓库种类
     private String wareType;
+    //仓库最大容量
     private int MaxStock;
+    //仓库现存量
     private int present;
+    //仓库所存商品ID
     private int GoodsID;
-
-    public Warehouse_ALL(String wareType,
-                         int MaxStock,
-                         int present,
-                         int goodsID) {
-        this.wareType = wareType;
-        this.MaxStock = MaxStock;
-        this.present = present;
-        this.GoodsID =goodsID;
-    }
 }

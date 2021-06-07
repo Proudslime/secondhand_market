@@ -1,8 +1,10 @@
 package com.slime.controller;
 
-import com.slime.dao.mapper.UserShopCartMapper;
-import com.slime.dao.mapper.userLoginMapper;
+import com.slime.dao.mapper.userMappers.UserShopCartMapper;
+import com.slime.dao.mapper.userMappers.userLoginMapper;
 import com.slime.pojo.*;
+import com.slime.pojo.ResultClass.Result;
+import com.slime.pojo.ResultClass.ResultResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

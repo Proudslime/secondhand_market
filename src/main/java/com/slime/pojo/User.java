@@ -10,33 +10,26 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+    //用户ID
     private int userID;
+    //用户姓名
     private String userName;
+    //用户密码
     private String password;
+    //用户性别
     private int gender;
+    //用户生日
     private Date birth;
+    //用户手机号
     private String phoneNumber;
+    //用户银行号
     private String bankNumber;
+    //用户所在城市
     private String city;
+    //用户邮箱
     private String email;
+    //用户钱包
     private float wallet;
+    //用户积分
     private float integral;
-
-    public User(String userName,
-                String password,
-                int gender,Date birth,
-                String phoneNumber,
-                String bankNumber,
-                String city,String email,
-                float wallet,float integral) {
-        this.userName = userName;
-        this.password = password;
-        this.gender = gender;
-        this.birth = birth;
-        this.phoneNumber = phoneNumber;
-        this.bankNumber = bankNumber;
-        this.city = city;
-        this.wallet = wallet;
-        this.integral = integral;
-    }
 }

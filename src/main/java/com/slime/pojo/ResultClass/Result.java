@@ -1,4 +1,4 @@
-package com.slime.pojo;
+package com.slime.pojo.ResultClass;
 
 public class Result<T> {
     //状态码

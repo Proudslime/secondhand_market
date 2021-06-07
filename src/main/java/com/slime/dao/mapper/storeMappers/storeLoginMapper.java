@@ -1,4 +1,4 @@
-package com.slime.dao.mapper;
+package com.slime.dao.mapper.storeMappers;
 
 import com.slime.pojo.Store;
 import org.apache.ibatis.annotations.Mapper;

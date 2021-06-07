@@ -1,4 +1,4 @@
-package com.slime.pojo;
+package com.slime.pojo.ResultClass;
 
 public class ResultResponse {
     private final static String SUCCESS = "success";

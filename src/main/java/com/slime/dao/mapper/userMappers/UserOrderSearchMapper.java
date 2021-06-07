@@ -1,4 +1,4 @@
-package com.slime.dao.mapper;
+package com.slime.dao.mapper.userMappers;
 
 import com.slime.pojo.ShoppingCart;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,7 +14,7 @@ public interface UserOrderSearchMapper {
 
     int getUserID(String userName);
 
-    void updateDealing(Dealing dealing);
+    void updateDealing(String Address, int userID);
 
     void addDealing(Dealing dealing);
 

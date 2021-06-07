@@ -1,8 +1,9 @@
 package com.slime.controller;
 
-import com.slime.dao.mapper.*;
-import com.slime.pojo.Result;
-import com.slime.pojo.ResultResponse;
+import com.slime.dao.mapper.storeMappers.storeLoginMapper;
+import com.slime.dao.mapper.userMappers.userLoginMapper;
+import com.slime.pojo.ResultClass.Result;
+import com.slime.pojo.ResultClass.ResultResponse;
 import com.slime.pojo.Store;
 import com.slime.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slime.dao.mapper.storeMappers.storeForGoodsMapper">
+
+<!--    还没测试-->
+
+    <select id="getGoodsFromWare" resultType="com.slime.pojo.Warehouse_store">
+        select *
+        from secondhand.warehouse_store
+        where storeID = #{storeID}
+    </select>
+
+    <select id="getIndexGoodsFromWare" resultType="java.lang.Integer">
+        select COUNT(0)
+        from secondhand.warehouse_store
+        where storeID = #{storeID}
+    </select>
+
+    <select id="getPresentFromWare" resultType="java.lang.Integer">
+        select present
+        from secondhand.warehouse_store
+        where wareID = #{wareID} and storeID = #{storeID}
+    </select>
+
+    <update id="updateWare">
+        update secondhand.warehouse_store
+        set present = #{present}
+        where wareID = #{wareID}
+    </update>
+
+    <delete id="deleteIndexWare">
+        delete from secondhand.warehouse_store
+        where wareID = #{wareID} and storeID = #{storeID}
+    </delete>
+
+    <delete id="deleteAllWare">
+        delete from secondhand.warehouse_store
+        where storeID = #{storeID}
+    </delete>
+
+    <insert id="addGoodsForWare" parameterType="com.slime.pojo.Warehouse_store">
+        insert into
+            secondhand.warehouse_store
+            (MaxStock, present, storeID, GoodsID)
+        VALUES
+            (#{MaxStock},#{present},#{storeID},#{GoodsID})
+    </insert>
+
+</mapper>
