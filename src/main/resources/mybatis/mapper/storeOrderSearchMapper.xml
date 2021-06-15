@@ -3,9 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.slime.dao.mapper.storeMappers.storeOrderSearchMapper">
-
-<!--    还没测试-->
+<mapper namespace="com.slime.dao.mapper.storeMappers.StoreOrderSearchMapper">
 
     <select id="getAllStoreDealing" resultType="com.slime.pojo.Dealing">
         select * from secondhand.dealing where StoreID = #{storeID}
@@ -19,8 +17,10 @@
         select amout from secondhand.dealing where StoreID = #{storeID}
     </select>
 
-    <select id="getStoreDealingUserAddress" resultType="java.lang.String">
-        select Address from secondhand.dealing where StoreID = #{storeID} and dealID = #{dealID}
-    </select>
+    <update id="accessDealing" parameterType="com.slime.pojo.Dealing">
+        update secondhand.dealing set isSuccessfulDeal = 1 and finalPrice = #{finalPrice} where dealID = #{dealID}
+    </update>
+
+
 
 </mapper>

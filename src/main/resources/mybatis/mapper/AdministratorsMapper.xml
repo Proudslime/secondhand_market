@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slime.dao.mapper.AdministratorsMapper">
+
+    <select id="loginIn" resultType="com.slime.pojo.Administrators">
+        select * from secondhand.administrator where adminName = #{adminName} and adminPass = #{adminPass}
+    </select>
+
+    <select id="checkPass" resultType="java.lang.Integer">
+        select COUNT(0) from secondhand.administrator where adminName = #{adminName} and adminPass = #{adminPass}
+    </select>
+
+    <select id="isHaveThisAdmin" resultType="java.lang.Integer">
+        select count(0) from secondhand.administrator where adminName = #{adminName}
+    </select>
+
+
+</mapper>

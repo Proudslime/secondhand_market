@@ -3,9 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.slime.dao.mapper.userMappers.UserOrderSearchMapper">
-
-<!--    所有的sql语句都需要测试-->
+<mapper namespace="com.slime.dao.mapper.UserMappers.UserOrderSearchMapper">
 
     <select id="getAllUserdealing" resultType="com.slime.pojo.Dealing">
         select * from secondhand.dealing where userID = #{userID}
@@ -23,9 +21,9 @@
 
     <insert id="addDealing" parameterType="com.slime.pojo.Dealing">
         insert into secondhand.dealing
-            (dealTime, finalPrice, Address, GoodsID, StoreID, userID)
+            (isSuccessfulDeal,dealTime, amout, finalPrice, Address, GoodsID, StoreID, userID)
         VALUES
-            (#{dealTime},#{finalPrice},#{Address},#{GoodsID},#{StoreID},#{userID})
+            (#{isSuccessfulDeal},#{dealTime},#{amout},#{finalPrice},#{Address},#{GoodsID},#{StoreID},#{userID})
     </insert>
 
     <delete id="deleteIndexDealing">
@@ -42,6 +40,10 @@
         select count(0)
         from secondhand.dealing
         where userID = #{userID}
+    </select>
+
+    <select id="getGoodsById" resultType="com.slime.pojo.Goods">
+        select * from secondhand.goodstable where goodsID = #{GoodsID}
     </select>
 
 </mapper>

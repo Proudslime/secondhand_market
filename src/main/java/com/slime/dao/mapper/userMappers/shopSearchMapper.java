@@ -1,15 +1,14 @@
-package com.slime.dao.mapper.userMappers;
+package com.slime.dao.mapper.UserMappers;
 
 import com.slime.pojo.Goods;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.util.List;
 
 @Mapper
 @Repository
-public interface shopSearchMapper {
+public interface ShopSearchMapper {
 
     /*
     查询思路，标签优先，然后是内容模糊查询

@@ -16,4 +16,6 @@ public class ShoppingCart {
     private int amout;
     //购物车的用户ID
     private int userID;
+    //商品的商家ID
+    private int storeID;
 }

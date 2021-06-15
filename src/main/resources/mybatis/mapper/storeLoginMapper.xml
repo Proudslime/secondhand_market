@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.slime.dao.mapper.storeMappers.storeLoginMapper">
+<mapper namespace="com.slime.dao.mapper.storeMappers.StoreLoginMapper">
 
     <select id="isHavethisStore" resultType="int">
         select count(0)

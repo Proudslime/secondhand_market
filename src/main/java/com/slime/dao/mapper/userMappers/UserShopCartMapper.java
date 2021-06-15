@@ -1,4 +1,4 @@
-package com.slime.dao.mapper.userMappers;
+package com.slime.dao.mapper.UserMappers;
 
 import com.slime.pojo.Goods;
 import com.slime.pojo.ShoppingCart;

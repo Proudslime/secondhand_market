@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class memorial {
+public class Memorial {
     //评价ID
     private int memorialID;
     //评价标题

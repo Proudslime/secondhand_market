@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface storeOrderSearchMapper {
+public interface StoreOrderSearchMapper {
 
     List<Dealing> getAllStoreDealing(int storeID);
 
@@ -16,6 +16,6 @@ public interface storeOrderSearchMapper {
 
     int getStoreDealingCount(int storeID);
 
-    String getStoreDealingUserAddress(int storeID, int dealID);
+    int accessDealing(Dealing dealing);
 
 }

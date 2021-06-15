@@ -3,9 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.slime.dao.mapper.storeMappers.storeForGoodsMapper">
-
-<!--    还没测试-->
+<mapper namespace="com.slime.dao.mapper.storeMappers.StoreForGoodsMapper">
 
     <select id="getGoodsFromWare" resultType="com.slime.pojo.Warehouse_store">
         select *
@@ -19,6 +17,10 @@
         where storeID = #{storeID}
     </select>
 
+    <select id="getWareID" resultType="java.lang.Integer">
+        select wareID from secondhand.warehouse_store where storeID = #{storeID} and GoodsID = #{goodsID}
+    </select>
+
     <select id="getPresentFromWare" resultType="java.lang.Integer">
         select present
         from secondhand.warehouse_store
@@ -28,7 +30,7 @@
     <update id="updateWare">
         update secondhand.warehouse_store
         set present = #{present}
-        where wareID = #{wareID}
+        where storeID = #{storeID} and wareID = #{wareID}
     </update>
 
     <delete id="deleteIndexWare">
@@ -47,6 +49,51 @@
             (MaxStock, present, storeID, GoodsID)
         VALUES
             (#{MaxStock},#{present},#{storeID},#{GoodsID})
+    </insert>
+
+
+    <select id="getStoreGoodsList" resultType="com.slime.pojo.Goods">
+        select * from secondhand.goodstable where storeID = #{storeID}
+    </select>
+
+    <select id="getGoodsCount" resultType="java.lang.Integer">
+        select COUNT(0) from secondhand.goodstable where storeID = #{storeID}
+    </select>
+
+    <update id="updateGoods" parameterType="com.slime.pojo.Goods">
+        update secondhand.goodstable
+        set
+            goodsName = #{goodsName},
+            goodsType = #{goodsType},
+            `condition` = #{condition},
+            instrutions = #{instrutions},
+            discount = #{discount},
+            status = #{status},
+            launchTime = #{launchTime},
+            MaxExp = #{MaxExp},
+            MiniExp = #{MiniExp},
+            price = #{price}
+        where storeID = #{storeID} and goodsID = #{goodsID}
+    </update>
+
+    <delete id="deleteIndexGoods">
+        delete from secondhand.goodstable where goodsID = #{goodsID} and storeID = #{storeID}
+    </delete>
+
+    <delete id="deleteAllGoods">
+        delete from secondhand.goodstable where storeID = #{storeID}
+    </delete>
+
+    <insert id="addGoods" parameterType="com.slime.pojo.Goods">
+        insert into secondhand.goodstable
+            (goodsName, goodsType, `condition`,
+             instrutions, discount, status, launchTime,
+             MaxExp, MiniExp, price, storeID)
+        VALUES
+            (#{goodsName},#{goodsType},#{condition},
+             #{instrutions},#{discount},#{status},
+             #{launchTime},#{MaxExp},#{MiniExp},
+             #{price},#{storeID})
     </insert>
 
 </mapper>

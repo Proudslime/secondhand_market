@@ -3,6 +3,8 @@ package com.slime.pojo.ResultClass;
 public class ResultResponse {
     private final static String SUCCESS = "success";
 
+    public ResultResponse() {}
+
     public static <T> Result<T> makeOKRsp() {
         Result<T> result = new Result<T>();
         result.setCode(RetCode.SUCCESS);

@@ -1,6 +1,6 @@
-package com.slime.dao.mapper.userMappers;
+package com.slime.dao.mapper.UserMappers;
 
-import com.slime.pojo.ShoppingCart;
+import com.slime.pojo.Goods;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import com.slime.pojo.Dealing;
@@ -14,13 +14,15 @@ public interface UserOrderSearchMapper {
 
     int getUserID(String userName);
 
-    void updateDealing(String Address, int userID);
+    int updateDealing(String Address, int userID);
 
-    void addDealing(Dealing dealing);
+    int addDealing(Dealing dealing);
 
-    void deleteIndexDealing(int dealID, int userID);
+    int deleteIndexDealing(int dealID, int userID);
 
-    void deleteAllDealing(int userID);
+    int deleteAllDealing(int userID);
 
     int getUserDealingCount(int userID);
+
+    Goods getGoodsById(int GoodsID);
 }

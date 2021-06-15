@@ -11,7 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 public class Goods {
     //商品ID
-    private int goodsId;
+    private int goodsID;
     //商品名称
     private String goodsName;
     //商品类型
@@ -32,4 +32,11 @@ public class Goods {
     private float MiniExp;
     //最合适的交易价格（系统自动生成，可以按照系统生成的交易，商家也可以自己确定）
     private float price;
+
+    //商家仓库ID
+    private int storeWareID;
+    //全部仓库ID
+    private int storeALLID;
+    //商家ID
+    private int storeID;
 }

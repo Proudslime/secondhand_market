@@ -1,7 +1,9 @@
 package com.slime.controller;
 
-import com.slime.dao.mapper.storeMappers.storeLoginMapper;
-import com.slime.dao.mapper.userMappers.userLoginMapper;
+import com.slime.dao.mapper.AdministratorsMapper;
+import com.slime.dao.mapper.storeMappers.StoreLoginMapper;
+import com.slime.dao.mapper.UserMappers.UserLoginMapper;
+import com.slime.pojo.Administrators;
 import com.slime.pojo.ResultClass.Result;
 import com.slime.pojo.ResultClass.ResultResponse;
 import com.slime.pojo.Store;
@@ -15,15 +17,18 @@ import java.sql.Date;
 @RestController
 public class LoginController {
 
-    final userLoginMapper userLogin;
-    final storeLoginMapper storeLogin;
+    final UserLoginMapper userLogin;
+    final StoreLoginMapper storeLogin;
+    final AdministratorsMapper adminLogin;
 
     @Autowired
     public LoginController(
-            userLoginMapper userLogin,
-            storeLoginMapper storeLogin) {
+            UserLoginMapper userLogin,
+            StoreLoginMapper storeLogin,
+            AdministratorsMapper adminLogin) {
         this.userLogin = userLogin;
         this.storeLogin = storeLogin;
+        this.adminLogin = adminLogin;
     }
 
     @PostMapping("/userLogin")
@@ -100,6 +105,23 @@ public class LoginController {
             return ResultResponse.makeOKRsp(store);
         } else {
             return ResultResponse.makeErrRsp("注册失败，已有该商家");
+        }
+    }
+
+    @PostMapping("/adminLogin")
+    public Result<Administrators> adminLogin(
+            @RequestParam("adminName") String adminName,
+            @RequestParam("adminPass") String adminPass
+    ) {
+        if (adminLogin.isHaveThisAdmin(adminName) > 0) {
+            Administrators administrators = adminLogin.loginIn(adminName,adminPass);
+            if (administrators != null) {
+                return ResultResponse.makeOKRsp(administrators);
+            } else {
+                return ResultResponse.makeErrRsp("用户名或者密码错误");
+            }
+        } else {
+            return ResultResponse.makeErrRsp("用户名不存在");
         }
     }
 

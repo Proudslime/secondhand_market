@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slime.dao.mapper.UserMappers.UserDataMapper">
+
+    <select id="getUserData" resultType="User">
+        select * from secondhand.usertable where userName = #{userName}
+    </select>
+
+    <update id="updateUserData" parameterType="com.slime.pojo.User">
+        update secondhand.usertable
+        set
+            phoneNumber = #{phoneNumber},
+            bankNumber = #{bankNumber},
+            city = #{city},
+            email = #{email}
+        where userID = #{userID}
+    </update>
+
+    <update id="recharge" parameterType="com.slime.pojo.User">
+        update secondhand.usertable
+        set wallet = #{wallet}
+        where userID = #{userID}
+    </update>
+
+</mapper>

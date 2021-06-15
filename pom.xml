@@ -18,6 +18,12 @@
     </properties>
     <dependencies>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 <!--        阿里巴巴连接池管控-->
         <dependency>
             <groupId>com.alibaba</groupId>

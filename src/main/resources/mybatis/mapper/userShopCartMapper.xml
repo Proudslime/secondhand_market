@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.slime.dao.mapper.userMappers.UserShopCartMapper">
+<mapper namespace="com.slime.dao.mapper.UserMappers.UserShopCartMapper">
 
     <select id="getUserID" resultType="java.lang.Integer">
         select userID
@@ -52,8 +52,8 @@
 
     <insert id="insertGoodsforCart" parameterType="com.slime.pojo.ShoppingCart">
         insert into secondhand.shopping_cart
-        (cartID, GoodsID, amout, userID)
-        VALUES (#{cartID},#{GoodsID},#{amout},#{userID})
+        (cartID, GoodsID, amout, userID, storeID)
+        VALUES (#{cartID},#{GoodsID},#{amout},#{userID},#{storeID})
     </insert>
 
 </mapper>

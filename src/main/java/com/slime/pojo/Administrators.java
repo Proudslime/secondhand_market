@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Administrator {
+public class Administrators {
     //管理员ID
-    private int id;
+    private int adminID;
     //管理员姓名
-    private String admName;
+    private String adminName;
     //管理员密码
-    private String admPass;
+    private String adminPass;
 }

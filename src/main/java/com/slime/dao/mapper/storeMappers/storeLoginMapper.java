@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
-public interface storeLoginMapper {
+public interface StoreLoginMapper {
     int isHavethisStore(String storename);
 
     int passwordCheck(String storeName, String password);

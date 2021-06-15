@@ -12,6 +12,8 @@ import java.util.Date;
 public class Dealing {
     //订单ID
     private int dealID;
+    //交易是否完成判断
+    private int isSuccessfulDeal;
     //订单完成时间
     private Date dealTime;
     //交易物品数量

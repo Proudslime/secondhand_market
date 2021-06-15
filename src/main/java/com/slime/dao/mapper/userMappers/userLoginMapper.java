@@ -1,4 +1,4 @@
-package com.slime.dao.mapper.userMappers;
+package com.slime.dao.mapper.UserMappers;
 
 import com.slime.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
-public interface userLoginMapper {
+public interface UserLoginMapper {
 
     Integer isHavethisUser(String userName);
 

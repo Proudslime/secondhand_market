@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slime.dao.mapper.UserMappers.UserAddressMapper">
+
+    <select id="getAllAddress" resultType="com.slime.pojo.AddressForUser">
+        select * from secondhand.addressforuser where userID = #{userID}
+    </select>
+
+    <update id="cancelMainAddress">
+        update secondhand.addressforuser set isMainAddress = 0 where addressID = #{addressID} and userID = #{userID}
+    </update>
+
+    <update id="selectMainAddress">
+        update secondhand.addressforuser set isMainAddress = 1 where addressID = #{addressID} and userID = #{userID}
+    </update>
+
+    <insert id="addAddress" parameterType="com.slime.pojo.AddressForUser">
+        insert into secondhand.addressforuser (content, isMainAddress, userID) VALUES (#{content},#{isMainAddress},#{userID})
+    </insert>
+
+    <select id="getMainAddress" resultType="java.lang.String">
+        select content from secondhand.addressforuser where userID = #{userID} and isMainAddress = 1
+    </select>
+
+    <delete id="deleteIndexAddress">
+        delete from secondhand.addressforuser where addressID = #{addressID} and userID = #{userID}
+    </delete>
+
+    <update id="updateIndexAddressContent">
+        update secondhand.addressforuser set content = #{content} where addressID = #{addressID} and userID = #{userID}
+    </update>
+
+</mapper>
