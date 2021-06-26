@@ -50,13 +50,17 @@ public class StoreDealingController {
 
     @PostMapping("/storeMain/storeDealing/access")
     public Result<Integer> accessDealing(
-        @RequestBody Dealing dealing,
-        @RequestParam("price") float price,
-        @RequestParam("storeName") String storeName,
-        @RequestParam("storeID") int storeID
+//        @RequestBody Dealing dealing,
+            @RequestParam("dealID") String dealID,
+            @RequestParam("price") float price,
+            @RequestParam("storeName") String storeName,
+            @RequestParam("storeID") int storeID
     ) {
         if (loginMapper.isHavethisStore(storeName) > 0) {
+            Dealing dealing = dealingMapper.getIndexOfDealing(Integer.parseInt(dealID));
             dealing.setFinalPrice(price);
+            dealing.setIsSuccessfulDeal(1);
+            System.out.println(dealing.toString());
             return ResultResponse.makeOKRsp(dealingMapper.accessDealing(dealing));
         } else {
             return ResultResponse.makeErrRsp("");

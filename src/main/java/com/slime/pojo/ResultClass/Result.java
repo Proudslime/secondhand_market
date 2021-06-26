@@ -1,6 +1,10 @@
 package com.slime.pojo.ResultClass;
 
-public class Result<T> {
+import java.io.Serializable;
+
+public class Result<T> implements Serializable {
+
+    private static final long serialVersionUID = 433365382815180652L;
     //状态码
     private int code;
     //提示信息

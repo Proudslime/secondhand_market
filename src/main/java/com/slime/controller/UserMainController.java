@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class UserMainController {
@@ -42,7 +41,7 @@ public class UserMainController {
     }
 
     @PostMapping("/main/search")
-    public Result<Goods> searchGoodsList(
+    public Result<List<Goods>> searchGoodsList(
             @RequestParam("searchContent") String searchContent
     ) {
         /*
@@ -50,14 +49,23 @@ public class UserMainController {
         我想的是创建一个类来实现搜索的分类，以便于查询
         要不要设计线程控制有待考虑
          */
-        String[] search = searchContent.split(";");
+        List<Goods> goodsList = new LinkedList<>();
 
-        return null;
+        if (!searchContent.contains(";")) {
+            goodsList = shopSearchMapper.gSRbyGoodName(searchContent);
+        } else {
+            String[] search = searchContent.split(";");
+            goodsList = shopSearchMapper.gSRbyGoodType(search[search.length - 1]);
+            System.out.println(goodsList.toString());
+        }
+        return ResultResponse.makeOKRsp(goodsList);
     }
 
     @PostMapping("/main/search/addGood")
     public Result<ShoppingCart> addGoodtoCart(
             Goods goods,
+            @RequestParam("goodsID") int goodsID,
+            @RequestParam("storeID") int storeID,
             @RequestParam("userName") String userName,
             @RequestParam("amout") String amout
     ) {
@@ -67,7 +75,8 @@ public class UserMainController {
             ShoppingCart shoppingCart = new ShoppingCart();
             shoppingCart.setUserID(cartMapper.getUserID(userName));
             shoppingCart.setAmout(Integer.parseInt(amout));
-            shoppingCart.setGoodsID(goods.getGoodsID());
+            shoppingCart.setGoodsID(goodsID);
+            shoppingCart.setStoreID(storeID);
             cartMapper.insertGoodsforCart(shoppingCart);
             if (cartMapper.userCartCount(userID) - index == 1) {
                 return ResultResponse.makeOKRsp(shoppingCart);
@@ -80,16 +89,20 @@ public class UserMainController {
     }
 
     @PostMapping("/main/shopCart")
-    public Result<List<Goods>> checkCart(
+    public Result<List<Map<String,Object>>> checkCart(
             @RequestParam("userName") String userName
     ) {
 
         if (!userName.equals("")) {
             if (userMapper.isHavethisUser(userName) != 0) {
                 List<ShoppingCart> cartslist = cartMapper.getUserShopCart(cartMapper.getUserID(userName));
-                List<Goods> goodsList = new ArrayList<>();
+                List<Map<String,Object>> goodsList = new ArrayList<>();
                 for (ShoppingCart cart: cartslist) {
-                    goodsList.add(cartMapper.getDetailGoods(cart.getGoodsID()));
+                    Map<String,Object> map = new HashMap<>();
+                    map.put("cartID",cart.getCartID());
+                    map.put("amout",cart.getAmout());
+                    map.put("goods",cartMapper.getDetailGoods(cart.getGoodsID()));
+                    goodsList.add(map);
                 }
                 return ResultResponse.makeOKRsp(goodsList);
             } else {
@@ -201,22 +214,19 @@ public class UserMainController {
 
     @PostMapping("/main/userData/recharge")
     public Result<Integer> reCharge(
-            @RequestBody User user,
+            @RequestParam("userName") String userName,
             @RequestParam("money") int money
     ) {
-        if (user.getUserName() != null) {
-            if (userMapper.isHavethisUser(user.getUserName()) > 0) {
-                if (money > 0) {
-                    user.setWallet(user.getWallet() + money);
-                } else {
-                    return ResultResponse.makeErrRsp("充值数额有误");
-                }
+        if (userMapper.isHavethisUser(userName) > 0) {
+            if (money > 0) {
+                User user = userDataMapper.getUserData(userName);
+                user.setWallet(user.getWallet() + money);
                 return ResultResponse.makeOKRsp(userDataMapper.recharge(user));
             } else {
-                return ResultResponse.makeErrRsp("请先登录");
+                return ResultResponse.makeErrRsp("充值数额有误");
             }
         } else {
-            return ResultResponse.makeErrRsp("请先登录");
+            return ResultResponse.makeErrRsp("请先登录1");
         }
     }
 
@@ -241,18 +251,18 @@ public class UserMainController {
     @PostMapping("/main/userAddress/add")
     public Result<Integer> addUserAddress(
             @RequestParam("userName") String userName,
-            @RequestParam("address") String address,
-            @RequestParam("addressList") List<AddressForUser> addressList
+            @RequestParam("address") String address
+//            @RequestParam("addressList") List<AddressForUser> addressList
     ){
         if (userName != null) {
             if (userMapper.isHavethisUser(userName) > 0) {
                 int userID = userDataMapper.getUserData(userName).getUserID();
 
-                for (AddressForUser a1 : addressList) {
-                    if (a1.getContent().equals(address)) {
-                        return ResultResponse.makeErrRsp("已经有改地址，请不要重复添加");
-                    }
-                }
+//                for (AddressForUser a1 : addressList) {
+//                    if (a1.getContent().equals(address)) {
+//                        return ResultResponse.makeErrRsp("已经有改地址，请不要重复添加");
+//                    }
+//                }
 
                 AddressForUser addressForUser = new AddressForUser();
                 addressForUser.setContent(address);
@@ -305,21 +315,24 @@ public class UserMainController {
     @PostMapping("/main/userAddress/selectMainAddress")
     public Result<String> selectMainAddress(
           @RequestParam("userName") String userName,
-          @RequestParam("addressID") int addressID,
-          @RequestParam("AddressList") List<AddressForUser> AddressList
+          @RequestParam("addressID") String addressID
+//          @RequestParam("AddressList") List<AddressForUser> AddressList
     ) {
         if (userMapper.isHavethisUser(userName) > 0) {
             int userID = dealingSearchMapper.getUserID(userName);
             int count = 0;
             String result = "";
-            for (AddressForUser a : AddressList) {
+            List<AddressForUser> address = userAddressMapper.getAllAddress(userID);
+            for (AddressForUser a : address) {
                 count += userAddressMapper.cancelMainAddress(a.getAddressID(),userID);
             }
-            result += "main:" + userAddressMapper.selectMainAddress(addressID,userID);
+            result += "main:" + userAddressMapper.selectMainAddress(Integer.parseInt(addressID),userID);
             result += "--notMain:" + count;
             return ResultResponse.makeOKRsp(result);
         } else {
             return ResultResponse.makeErrRsp("");
         }
     }
+
+
 }

@@ -18,4 +18,6 @@ public interface StoreOrderSearchMapper {
 
     int accessDealing(Dealing dealing);
 
+    Dealing getIndexOfDealing(int dealID);
+
 }

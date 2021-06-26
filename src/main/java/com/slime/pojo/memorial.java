@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @Description: 商家的商品的评价
  * @author: Admin
@@ -12,7 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Memorial {
+public class Memorial implements Serializable {
+    private static final long serialVersionUID = -4819373841127475221L;
     //评价ID
     private int memorialID;
     //评价标题

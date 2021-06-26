@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Warehouse_store {
+public class Warehouse_store implements Serializable {
+    private static final long serialVersionUID = 5085087651208001735L;
     //仓库ID
     private int wareID;
     //最大存货量

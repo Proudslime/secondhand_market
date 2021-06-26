@@ -69,7 +69,7 @@ public class LoginController {
     public Result<User> userRegister(
             @RequestParam("userName") String userName,
             @RequestParam("password") String password,
-            @RequestParam("gender") int gender,
+            @RequestParam("gender") String gender,
             @RequestParam("birth") Date birth,
             @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
             @RequestParam(value = "bankNumber", required = false) String bankNumber,
@@ -101,6 +101,10 @@ public class LoginController {
     ) {
 
         if (storeLogin.isHavethisStore(store.getStoreName()) == 0) {
+            store.setAuditStatus("1");
+            store.setWallet(0);
+            store.setStorelevel("1");
+            System.out.println(store.toString());
             storeLogin.register(store);
             return ResultResponse.makeOKRsp(store);
         } else {

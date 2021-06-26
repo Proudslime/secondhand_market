@@ -6,18 +6,27 @@ import com.slime.dao.mapper.storeMappers.StoreOrderSearchMapper;
 import com.slime.pojo.Goods;
 import com.slime.pojo.ResultClass.Result;
 import com.slime.pojo.ResultClass.ResultResponse;
+import com.slime.pojo.Store;
+import com.slime.pojo.User;
 import com.slime.pojo.Warehouse_store;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.StringUtils;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
 public class StoreMainController {
 
+    private static final String UPLOAD_PATH = "F:/Java_Idea_Programming/imgFile/";
     final StoreLoginMapper loginMapper;
     final StoreForGoodsMapper goodsMapper;
 
@@ -69,7 +78,15 @@ public class StoreMainController {
 
     @PostMapping("/storeMain/addGood")
     public Result<String> addGood(
-            @RequestBody Goods goods,
+//            @RequestBody Goods goods,
+            @RequestParam("goodsName") String goodsName,
+            @RequestParam("goodsType") String goodsType,
+            @RequestParam("condition") String condition,
+            @RequestParam("instrutions") String instrutions,
+            @RequestParam("discount") String discount,
+            @RequestParam("status") String status,
+            @RequestParam("MaxExp") String MaxExp,
+            @RequestParam("MiniExp") String MiniExp,
             @RequestParam("storeID") int storeID,
             @RequestParam("storeName") String storeName,
             @RequestParam("present") int present
@@ -77,12 +94,31 @@ public class StoreMainController {
         if (present < 100) {
             if (loginMapper.isHavethisStore(storeName) > 0) {
                 String result = "";
+                Goods goods = new Goods();
+                goods.setStoreID(storeID);
+                goods.setMaxExp(Float.parseFloat(MaxExp));
+                goods.setInstrutions(instrutions);
+                goods.setMiniExp(Float.parseFloat(MiniExp));
+                goods.setGoodsName(goodsName);
+                goods.setGoodsType(goodsType);
+                goods.setLaunchTime(new Date(System.currentTimeMillis()));
+                goods.setDiscount(Integer.parseInt(discount));
+                goods.setCondition(condition);
+                goods.setStatus(status);
                 result += "goods:" + goodsMapper.addGoods(goods);
+
+                List<Goods> goodsList = goodsMapper.getStoreGoodsList(storeID);
+                int goodsID = 0;
+                for (Goods a : goodsList) {
+                    if (a.getGoodsName().equals(goodsName)) {
+                        goodsID = a.getGoodsID();
+                    }
+                }
                 Warehouse_store ws = new Warehouse_store();
                 ws.setStoreID(storeID);
                 ws.setMaxStock(100);
                 ws.setPresent(present);
-                ws.setGoodsID(goods.getGoodsID());
+                ws.setGoodsID(goodsID);
                 result += "--ware:" + goodsMapper.addGoodsForWare(ws);
                 return ResultResponse.makeOKRsp(result);
             } else {
@@ -92,6 +128,41 @@ public class StoreMainController {
             return ResultResponse.makeErrRsp("");
         }
     }
+
+    @PostMapping("/upload")
+    public Result<MultipartFile> singleFileUpload(
+            @RequestParam("photo") MultipartFile file
+            ) throws IOException {
+
+//        String fileName = file.getOriginalFilename();
+//
+//        OutputStreamWriter op = new OutputStreamWriter(new FileOutputStream("./file/" + fileName), StandardCharsets.UTF_8);
+//        InputStreamReader inputStreamReader = new InputStreamReader(file.getInputStream());
+//        char[] bytes = new char[12];
+//
+//        while (inputStreamReader.read(bytes) != -1) {
+//            op.write(bytes);
+//        }
+//
+//        op.close();
+//
+//        inputStreamReader.close();
+//
+//        return ResultResponse.makeOKRsp();
+
+        String fileName = file.getOriginalFilename() + System.currentTimeMillis();
+        if (file.isEmpty()) {
+            return ResultResponse.makeErrRsp("");
+        }
+        try {
+            File f1 = new File("./file/" + fileName);
+            file.transferTo(f1);
+        } catch (IOException e) {
+            return ResultResponse.makeErrRsp("");
+        }
+        return ResultResponse.makeOKRsp(file);
+    }
+
 
     @PostMapping("/storeMain/goods/update")
     public Result<Integer> updateGood(

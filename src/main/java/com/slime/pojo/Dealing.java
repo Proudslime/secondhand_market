@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dealing {
+public class Dealing implements Serializable {
+    private static final long serialVersionUID = -2340653546389659960L;
     //订单ID
     private int dealID;
     //交易是否完成判断

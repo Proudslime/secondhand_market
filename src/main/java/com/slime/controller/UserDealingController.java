@@ -7,14 +7,17 @@ import com.slime.pojo.Dealing;
 import com.slime.pojo.ResultClass.Result;
 import com.slime.pojo.ResultClass.ResultResponse;
 import com.slime.pojo.ShoppingCart;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 用户的商品提交，商品订单查询界面所需
@@ -74,44 +77,43 @@ public class UserDealingController {
 
     }
 
+    /*
+    list是特殊的参数类型，所以我打算前端循环调用后端的提交
+     */
     @PostMapping("/main/userDealing/add")
     public Result<Integer> addDealing(
-            @RequestParam("cartList") List<ShoppingCart> cartList,
+            @RequestParam("price") String price,
+            @RequestParam("storeID") String storeID,
+            @RequestParam("goodsID") String goodsID,
+            @RequestParam("amout") String amout,
             @RequestParam("userName") String userName
     ) {
         if (userName != null) {
 
             if (loginMapper.isHavethisUser(userName) > 0) {
 
-                List<Dealing> dealingList = new ArrayList<>();
                 int userID = dealingMapper.getUserID(userName);
-                int count = 0;
-                for (ShoppingCart shoppingCart: cartList) {
-                    Dealing dealing = new Dealing();
-                    dealing.setIsSuccessfulDeal(0);
-                    dealing.setDealTime(new Date(System.currentTimeMillis()));
-                    dealing.setAmout(shoppingCart.getAmout());
-                    dealing.setFinalPrice(dealingMapper.getGoodsById(shoppingCart.getGoodsID()).getPrice());
-                    dealing.setAddress(userAddressMapper.getMainAddress(userID));
-                    dealing.setStoreID(shoppingCart.getStoreID());
-                    dealing.setUserID(userID);
-                    dealing.setGoodsID(shoppingCart.getGoodsID());
-                    dealingList.add(dealing);
-                    count += dealingMapper.addDealing(dealing);
-                }
-
-                if (!dealingList.isEmpty()) {
-                    return ResultResponse.makeOKRsp(count);
+                Dealing dealing = new Dealing();
+                dealing.setIsSuccessfulDeal(0);
+                dealing.setDealTime(new Date(System.currentTimeMillis()));
+                dealing.setAmout(Integer.parseInt(amout));
+                dealing.setFinalPrice(Float.parseFloat(price));
+                dealing.setAddress(userAddressMapper.getMainAddress(userID));
+                dealing.setStoreID(Integer.parseInt(storeID));
+                dealing.setUserID(userID);
+                dealing.setGoodsID(Integer.parseInt(goodsID));
+                if (dealingMapper.addDealing(dealing) > 0) {
+                    return ResultResponse.makeOKRsp();
                 } else {
                     return ResultResponse.makeErrRsp("订单提交失败，请稍后再添加");
                 }
 
             } else {
-                return ResultResponse.makeErrRsp("");
+                return ResultResponse.makeErrRsp("123");
             }
 
         } else {
-            return ResultResponse.makeErrRsp("");
+            return ResultResponse.makeErrRsp("234");
         }
     }
 

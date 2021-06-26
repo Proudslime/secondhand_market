@@ -20,6 +20,8 @@ public interface ShopSearchMapper {
 
     List<Goods> gSRbyGoodName(String goodsName);
 
+    List<Goods> gSRbyGoodType(String goodsType);
+
     List<Goods> gSRbylaunchTime(String searchYear, String searchMonth);
 
     List<Goods> gSRbyExp(float MaxExp, float MiniExp);

@@ -12,7 +12,11 @@
     </select>
 
     <select id="gSRbyGoodName" resultType="com.slime.pojo.Goods">
-        select * from secondhand.goodstable where goodsName = #{goodsName}
+        select * from secondhand.goodstable where goodsName like concat('%',#{goodsName},'%')
+    </select>
+
+    <select id="gSRbyGoodType" resultType="com.slime.pojo.Goods">
+        select * from secondhand.goodstable where goodsType like concat('%',#{goodsType},'%')
     </select>
 
     <select id="gSRbylaunchTime" resultType="com.slime.pojo.Goods">

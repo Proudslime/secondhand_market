@@ -18,9 +18,14 @@
     </select>
 
     <update id="accessDealing" parameterType="com.slime.pojo.Dealing">
-        update secondhand.dealing set isSuccessfulDeal = 1 and finalPrice = #{finalPrice} where dealID = #{dealID}
+        update secondhand.dealing
+        set isSuccessfulDeal = #{isSuccessfulDeal},
+            finalPrice = #{finalPrice}
+        where dealID = #{dealID}
     </update>
 
-
+    <select id="getIndexOfDealing" resultType="com.slime.pojo.Dealing">
+        select * from secondhand.dealing where dealID = #{dealID}
+    </select>
 
 </mapper>

@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = -1344978489743452966L;
     //用户ID
     private int userID;
     //用户姓名
@@ -17,7 +19,7 @@ public class User {
     //用户密码
     private String password;
     //用户性别
-    private int gender;
+    private String gender;
     //用户生日
     private Date birth;
     //用户手机号

@@ -51,15 +51,15 @@ class Springboot07ApplicationTests {
     @Test
     void contextLoads() {
 
-        Store s1 = storeLogin.loginin("zhangsan","123456");
+        Store s1 = storeLogin.loginin("test1","111");
 
-        User u1 = userLogin.loginin("wangwu","123123");
+        User u1 = userLogin.loginin("test11","111");
 
-        AddressForUser addressForUser = new AddressForUser();
-        addressForUser.setUserID(u1.getUserID());
-        addressForUser.setContent("北信科44");
-        addressForUser.setIsMainAddress("0");
-        System.out.println(userAddress.addAddress(addressForUser));
+        Dealing dealing = storeOrderSearch.getIndexOfDealing(5);
+        System.out.println(dealing.toString());
+        dealing.setIsSuccessfulDeal(1);
+        dealing.setFinalPrice(400);
+        storeOrderSearch.accessDealing(dealing);
 
     }
 

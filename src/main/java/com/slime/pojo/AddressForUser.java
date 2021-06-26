@@ -3,6 +3,8 @@ package com.slime.pojo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @Description: 用户的收货地址
  * @author: Admin
@@ -10,7 +12,8 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class AddressForUser {
+public class AddressForUser implements Serializable {
+    private static final long serialVersionUID = 5571028188038152315L;
     private int addressID;
     private String content;
     private String isMainAddress;

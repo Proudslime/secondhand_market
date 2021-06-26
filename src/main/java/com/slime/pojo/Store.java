@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Store {
+public class Store implements Serializable {
+    private static final long serialVersionUID = -7118746708917582343L;
     //商家ID
     private int storeID;
     //商家姓名
